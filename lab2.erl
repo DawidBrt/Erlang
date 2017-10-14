@@ -10,9 +10,14 @@ map_display(Map) -> maps:to_list(Map).
 %f-cja wildcard
 %czytaj po lini dla zwiekszenia efektywnosci
 %%%%%%%%%%%%%%%%%%%%
+
+fromLtoM([]) -> [];
+fromLtoM([H|T]) -> [{H,1}|fromLtoM(T)].
+
 readfile(FileName) ->
 	{ok, Binary} = file:read_file(FileName),
-	Lines = string:tokens(erlang:binary_to_list(Binary), "\n .,").
+	Lines = string:tokens(erlang:binary_to_list(Binary), "\n .,"),
+	maps:from_list(fromLtoM(Lines)).
 	
 
 
